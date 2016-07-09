@@ -1,6 +1,6 @@
 package dto;
 
-public class TracePoint implements Point {
+public class TracePoint {
     private double approximatedTime;
     private double xAxis;
     private double yAxis;
@@ -22,7 +22,6 @@ public class TracePoint implements Point {
         this.approximatedTime = approximatedTime;
     }
 
-    @Override
     public double getxAxis() {
         return xAxis;
     }
@@ -31,12 +30,20 @@ public class TracePoint implements Point {
         this.xAxis = xAxis;
     }
 
-    @Override
     public double getyAxis() {
         return yAxis;
     }
 
     public void setyAxis(double yAxis) {
         this.yAxis = yAxis;
+    }
+
+    @Override
+    public String toString() {
+        return "TracePoint{" +
+                "approximatedTime=" + approximatedTime +
+                ", xAxis=" + xAxis +
+                ", yAxis=" + yAxis +
+                '}';
     }
 }

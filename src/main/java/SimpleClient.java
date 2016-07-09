@@ -1,4 +1,3 @@
-import dto.Point;
 import dto.TracePoint;
 import dto.TrackingRecord;
 import sun.java2d.loops.GraphicsPrimitive;

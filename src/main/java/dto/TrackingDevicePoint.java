@@ -1,6 +1,6 @@
 package dto;
 
-public class TrackingDevicePoint implements Point {
+public class TrackingDevicePoint {
 
     private double xAxis;
     private double yAxis;
