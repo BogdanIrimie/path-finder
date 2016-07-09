@@ -5,8 +5,11 @@ import com.bpathfinder.dto.TracePoint;
 import com.bpathfinder.dto.TrackingRecord;
 import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
 import com.lemmingapex.trilateration.TrilaterationFunction;
+import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
 import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,6 +20,8 @@ import java.util.stream.Collectors;
  * Process traces from tracking devices.
  */
 public class TraceProcessor {
+
+    private static final Logger logger = LoggerFactory.getLogger(TraceProcessor.class);
 
     public void processTraces(List<TrackingRecord> trackingRecords) {
         flattenTime(trackingRecords);
@@ -38,7 +43,7 @@ public class TraceProcessor {
                     flatTime.add(trackingRecord);
                 }
                 else {
-                    if (flatTime.stream().distinct().count() >= 3) {
+                    if (flatTime.stream().distinct().count() >= 2) {
                         // TracePoint tp = computeTrackingPointByAverage(flatTime);
                         TracePoint tp = computeTracePointByTrilateration(flatTime);
                         pathTraces.add(tp);
@@ -92,10 +97,15 @@ public class TraceProcessor {
      * @return TracePoint obtain by trilateration.
      */
     private TracePoint computeTracePointByTrilateration(List<TrackingRecord> trackingRecordsAtSameTime) {
+
+//        trackingRecordsAtSameTime = trackingRecordsAtSameTime.stream().distinct()
+//                .collect(Collectors.toList());
+
         double[][] positions = new double[trackingRecordsAtSameTime.size()][2];
         double[] distances = new double[trackingRecordsAtSameTime.size()];
         int recordCounter = 0;
         double time = 0;
+
 
         Iterator<TrackingRecord> it = trackingRecordsAtSameTime.iterator();
         while (it.hasNext()) {
@@ -106,9 +116,16 @@ public class TraceProcessor {
             time += tr.getTime();
         }
 
-        NonLinearLeastSquaresSolver solver = new NonLinearLeastSquaresSolver(new TrilaterationFunction(positions, distances), new LevenbergMarquardtOptimizer());
-        LeastSquaresOptimizer.Optimum optimum = solver.solve();
-        double[] centroid = optimum.getPoint().toArray();
+        double[] centroid = new double[] {-1, -1};
+        try {
+            NonLinearLeastSquaresSolver solver = new NonLinearLeastSquaresSolver(new TrilaterationFunction(positions, distances), new LevenbergMarquardtOptimizer());
+            LeastSquaresOptimizer.Optimum optimum = solver.solve();
+            centroid = optimum.getPoint().toArray();
+        }
+        catch(TooManyEvaluationsException e) {
+            logger.error(e.getMessage(), e);
+        }
+
 
         return new TracePoint(time/recordCounter, centroid[0], centroid[1]);
     }
