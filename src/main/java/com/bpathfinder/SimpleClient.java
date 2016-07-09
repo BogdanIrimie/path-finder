@@ -1,6 +1,9 @@
-import dto.TracePoint;
-import dto.TrackingRecord;
-import sun.java2d.loops.GraphicsPrimitive;
+package com.bpathfinder;
+
+import com.bpathfinder.dto.TracePoint;
+import com.bpathfinder.dto.TrackingRecord;
+import com.bpathfinder.parsers.CsvParser;
+import com.bpathfinder.parsers.ObjectsToCsv;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,6 +39,9 @@ public class SimpleClient {
 
         pathTraces.stream().forEach(System.out::println);
         System.out.println("Computer some triangulated points!");
+
+        ObjectsToCsv objectsToCsv = new ObjectsToCsv();
+        objectsToCsv.writePojoToCsv(pathTraces);
     }
 
     private static List<TracePoint> pathTraces = new ArrayList<TracePoint>();

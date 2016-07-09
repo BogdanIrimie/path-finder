@@ -1,8 +1,10 @@
+package com.bpathfinder.parsers;
+
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import dto.TrackingDevicePoint;
-import dto.TrackingRecord;
+import com.bpathfinder.dto.TrackingDevice;
+import com.bpathfinder.dto.TrackingRecord;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +16,7 @@ public class CsvParser {
     public List<TrackingRecord> parse() {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader().withColumnSeparator(',');
-        File tpFile = new File("trackingRecords.csv");
+        File tpFile = new File("traces/in_trackingRecords.csv");
 
 
         MappingIterator<TrackingRecord> tpIterator = null;
@@ -27,8 +29,8 @@ public class CsvParser {
         }
 
         // get tracking points from tracking records
-        List<TrackingDevicePoint> listOfTrackingDevicePoints = trackingRecordList.stream().distinct()
-                .map(f -> new TrackingDevicePoint(f.getxAxis(), f.getyAxis()))
+        List<TrackingDevice> listOfTrackingDevices = trackingRecordList.stream().distinct()
+                .map(f -> new TrackingDevice(f.getxAxis(), f.getyAxis()))
                 .collect(Collectors.toList());
 
 

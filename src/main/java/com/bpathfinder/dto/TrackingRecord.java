@@ -1,4 +1,4 @@
-package dto;
+package com.bpathfinder.dto;
 
 public class TrackingRecord {
     private double time;

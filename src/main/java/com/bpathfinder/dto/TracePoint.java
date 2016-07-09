@@ -1,4 +1,4 @@
-package dto;
+package com.bpathfinder.dto;
 
 public class TracePoint {
     private double approximatedTime;

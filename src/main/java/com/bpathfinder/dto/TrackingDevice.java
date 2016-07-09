@@ -1,14 +1,14 @@
-package dto;
+package com.bpathfinder.dto;
 
-public class TrackingDevicePoint {
+public class TrackingDevice {
 
     private double xAxis;
     private double yAxis;
 
-    public TrackingDevicePoint() {
+    public TrackingDevice() {
     }
 
-    public TrackingDevicePoint(double xAxis, double yAxis) {
+    public TrackingDevice(double xAxis, double yAxis) {
         this.xAxis = xAxis;
         this.yAxis = yAxis;
     }
