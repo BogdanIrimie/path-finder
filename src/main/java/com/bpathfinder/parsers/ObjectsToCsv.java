@@ -6,11 +6,16 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.bpathfinder.dto.TracePoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.List;
 
+
 public class ObjectsToCsv {
+
+    private static final Logger logger = LoggerFactory.getLogger(ObjectsToCsv.class);
 
     public void writePojoToCsv(List<TracePoint> tracePointList) {
         CsvMapper mapper = new CsvMapper();
@@ -27,15 +32,15 @@ public class ObjectsToCsv {
             OutputStreamWriter writerOutputStream = new OutputStreamWriter(bufferedOutputStream, "UTF-8");
             myObjectWriter.writeValue(writerOutputStream, tracePointList);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (JsonGenerationException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

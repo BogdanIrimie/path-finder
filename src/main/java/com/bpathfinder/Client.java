@@ -4,13 +4,14 @@ import com.bpathfinder.dto.TracePoint;
 import com.bpathfinder.dto.TrackingRecord;
 import com.bpathfinder.parsers.CsvParser;
 import com.bpathfinder.parsers.ObjectsToCsv;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SimpleClient {
+public class Client {
     public static void main(String[] args) {
         CsvParser csvParser = new CsvParser();
         List<TrackingRecord> trackingRecords = csvParser.parse();
