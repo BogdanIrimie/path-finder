@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Parse CSV file and extract list of TrackingRecords.
+ */
 public class CsvParser {
 
     public List<TrackingRecord> parse() {
@@ -37,8 +40,4 @@ public class CsvParser {
         return trackingRecordList;
     }
 
-    public static void main(String[] args) {
-        CsvParser csvParser = new CsvParser();
-        csvParser.parse();
-    }
 }
