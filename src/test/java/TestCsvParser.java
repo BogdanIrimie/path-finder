@@ -1,5 +1,5 @@
 import com.bpathfinder.dto.TrackingRecord;
-import com.bpathfinder.parsers.CsvParser;
+import com.bpathfinder.parsers.CsvToTrackingRecords;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,8 +10,8 @@ public class TestCsvParser {
 
     @Test
     public void testParser() {
-        CsvParser csvParser = new CsvParser();
-        List<TrackingRecord> trackingRecords = csvParser.parse();
+        CsvToTrackingRecords csvToTrackingRecords = new CsvToTrackingRecords();
+        List<TrackingRecord> trackingRecords = csvToTrackingRecords.parse();
         assertTrue(trackingRecords.stream().count() == 999);
     }
 }

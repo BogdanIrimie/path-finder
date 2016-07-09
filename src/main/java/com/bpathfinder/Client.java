@@ -1,9 +1,10 @@
 package com.bpathfinder;
 
 import com.bpathfinder.dto.TracePoint;
+import com.bpathfinder.dto.TrackingDevice;
 import com.bpathfinder.dto.TrackingRecord;
-import com.bpathfinder.parsers.CsvParser;
-import com.bpathfinder.parsers.ObjectsToCsv;
+import com.bpathfinder.parsers.CsvToTrackingRecords;
+import com.bpathfinder.parsers.TracePointsToCsv;
 import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
 import com.lemmingapex.trilateration.TrilaterationFunction;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
@@ -19,8 +20,8 @@ public class Client {
 
     public static void main(String[] args) {
         // parse CSV
-        CsvParser csvParser = new CsvParser();
-        List<TrackingRecord> trackingRecords = csvParser.parse();
+        CsvToTrackingRecords csvToTrackingRecords = new CsvToTrackingRecords();
+        List<TrackingRecord> trackingRecords = csvToTrackingRecords.parse();
 
         // flatten time
         Client client = new Client();
@@ -28,8 +29,8 @@ public class Client {
 
         pathTraces.stream().forEach(System.out::println);
 
-        ObjectsToCsv objectsToCsv = new ObjectsToCsv();
-        objectsToCsv.writePojoToCsv(pathTraces);
+        TracePointsToCsv tracePointsToCsv = new TracePointsToCsv();
+        tracePointsToCsv.writePojoToCsv(pathTraces);
     }
 
 

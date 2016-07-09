@@ -12,10 +12,12 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.List;
 
+/**
+ * Save TracePoint array to CSV.
+ */
+public class TracePointsToCsv {
 
-public class ObjectsToCsv {
-
-    private static final Logger logger = LoggerFactory.getLogger(ObjectsToCsv.class);
+    private static final Logger logger = LoggerFactory.getLogger(TracePointsToCsv.class);
 
     public void writePojoToCsv(List<TracePoint> tracePointList) {
         CsvMapper mapper = new CsvMapper();
