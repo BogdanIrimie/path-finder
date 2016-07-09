@@ -123,7 +123,8 @@ public class TraceProcessor {
             centroid = optimum.getPoint().toArray();
         }
         catch(TooManyEvaluationsException e) {
-            logger.error(e.getMessage(), e);
+            //ignore exception
+            //logger.error(e.getMessage(), e);
         }
 
 
