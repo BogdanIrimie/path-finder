@@ -65,6 +65,9 @@ public class TraceProcessor {
 
         TracePointsToCsv tracePointsToCsv = new TracePointsToCsv();
         tracePointsToCsv.writePojoToCsv(pathTraces);
+
+        Plotter plotter = new Plotter();
+        plotter.plot(pathTraces);
     }
 
     /**
