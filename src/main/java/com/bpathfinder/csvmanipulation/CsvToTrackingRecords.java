@@ -1,9 +1,8 @@
-package com.bpathfinder.parsers;
+package com.bpathfinder.csvmanipulation;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.bpathfinder.dto.TrackingDevice;
 import com.bpathfinder.dto.TrackingRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Parse CSV file and extract list of TrackingRecords.

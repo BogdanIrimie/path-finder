@@ -1,5 +1,5 @@
 import com.bpathfinder.dto.TrackingRecord;
-import com.bpathfinder.parsers.CsvToTrackingRecords;
+import com.bpathfinder.csvmanipulation.CsvToTrackingRecords;
 import org.junit.Test;
 
 import java.util.List;

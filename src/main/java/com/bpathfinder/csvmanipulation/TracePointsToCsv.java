@@ -1,4 +1,4 @@
-package com.bpathfinder.parsers;
+package com.bpathfinder.csvmanipulation;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
