@@ -1,0 +1,4 @@
+{
+  "inputCsvFile": "in_trackingRecords.csv",
+  "outputCsvFile": "out_tracePoints.csv"
+}
