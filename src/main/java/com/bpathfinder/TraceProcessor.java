@@ -45,7 +45,7 @@ public class TraceProcessor {
                     flatTime.add(trackingRecord);
                 }
                 else {
-                    if (flatTime.stream().distinct().count() >= 2) {
+                    if (flatTime.stream().distinct().count() >= 3) {
                         // TracePoint tp = computeTrackingPointByAverage(flatTime);
                         TracePoint tp = computeTracePointByTrilateration(flatTime);
                         pathTraces.add(tp);
@@ -68,6 +68,7 @@ public class TraceProcessor {
         TracePointsToCsv tracePointsToCsv = new TracePointsToCsv();
         tracePointsToCsv.writePojoToCsv(pathTraces);
 
+        // plot results
         Plotter plotter = new Plotter();
         plotter.plotTrackingDevices(new ExtractTrackingDevices().extractDevices(trackingRecords));
         plotter.plotPath(pathTraces);
