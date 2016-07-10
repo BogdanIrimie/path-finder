@@ -1,23 +1,29 @@
 package com.bpathfinder.utils;
 
 import com.bpathfinder.dto.TracePoint;
+import com.bpathfinder.dto.TrackingDevice;
 import eu.jacquet80.minigeo.MapWindow;
 import eu.jacquet80.minigeo.POI;
 import eu.jacquet80.minigeo.Point;
 import eu.jacquet80.minigeo.Segment;
-import javafx.animation.PathTransition;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.*;
-import java.util.regex.Matcher;
+import java.util.List;
 
+/**
+ * Draw path.
+ */
 public class Plotter {
 
+    MapWindow window = new MapWindow();
 
-    public void plot(java.util.List<TracePoint> pathTraces) {
-        MapWindow window = new MapWindow();
+    /**
+     * Print computed path path.
+     *
+     * @param pathTraces list containing computed path.
+     */
+    public void plotPath(List<TracePoint> pathTraces) {
         // at least 1 segment is necessary because of minigeo library bug.
         window.addSegment(
                 new Segment(
@@ -35,7 +41,7 @@ public class Plotter {
                 window.addSegment(new Segment(
                         new Point(previous.getxAxis(), previous.getyAxis()),
                         new Point(current.getxAxis(), current.getyAxis()),
-                        Color.RED));
+                        Color.ORANGE));
             }
             //window.addPOI(new POI(new Point(current.getxAxis(), current.getyAxis()), current.getApproximatedTime()+""));
             window.addPOI(new POI(new Point(current.getxAxis(), current.getyAxis()), ""));
@@ -49,6 +55,20 @@ public class Plotter {
             }
 
         }
+    }
 
+    /**
+     * Print tracking device location.
+     *
+     * @param trackingDevices list containing tracking devices.
+     */
+    public void plotTrackingDevices(List<TrackingDevice> trackingDevices) {
+        trackingDevices.stream().forEach(trackingDevice -> {
+            window.addPOI(new POI(new Point(
+                    trackingDevice.getxAxis(),
+                    trackingDevice.getyAxis()),
+                    String.format("(%.2f %.2f)", trackingDevice.getxAxis(), trackingDevice.getyAxis())));
+        });
+        window.setVisible(true);
     }
 }

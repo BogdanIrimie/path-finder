@@ -3,6 +3,7 @@ package com.bpathfinder;
 import com.bpathfinder.csvmanipulation.TracePointsToCsv;
 import com.bpathfinder.dto.TracePoint;
 import com.bpathfinder.dto.TrackingRecord;
+import com.bpathfinder.extractors.ExtractTrackingDevices;
 import com.bpathfinder.utils.Plotter;
 import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
 import com.lemmingapex.trilateration.TrilaterationFunction;
@@ -62,13 +63,14 @@ public class TraceProcessor {
             }
         });
 
-        pathTraces.stream().forEach(System.out::println);
+        //pathTraces.stream().forEach(System.out::println);
 
         TracePointsToCsv tracePointsToCsv = new TracePointsToCsv();
         tracePointsToCsv.writePojoToCsv(pathTraces);
 
         Plotter plotter = new Plotter();
-        plotter.plot(pathTraces);
+        plotter.plotTrackingDevices(new ExtractTrackingDevices().extractDevices(trackingRecords));
+        plotter.plotPath(pathTraces);
     }
 
     /**
