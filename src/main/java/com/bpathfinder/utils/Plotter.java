@@ -1,4 +1,4 @@
-package com.bpathfinder;
+package com.bpathfinder.utils;
 
 import com.bpathfinder.dto.TracePoint;
 import eu.jacquet80.minigeo.MapWindow;

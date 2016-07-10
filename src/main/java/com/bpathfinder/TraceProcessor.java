@@ -3,6 +3,7 @@ package com.bpathfinder;
 import com.bpathfinder.csvmanipulation.TracePointsToCsv;
 import com.bpathfinder.dto.TracePoint;
 import com.bpathfinder.dto.TrackingRecord;
+import com.bpathfinder.utils.Plotter;
 import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
 import com.lemmingapex.trilateration.TrilaterationFunction;
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
