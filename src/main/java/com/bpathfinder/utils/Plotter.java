@@ -6,6 +6,8 @@ import eu.jacquet80.minigeo.MapWindow;
 import eu.jacquet80.minigeo.POI;
 import eu.jacquet80.minigeo.Point;
 import eu.jacquet80.minigeo.Segment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.*;
@@ -16,7 +18,8 @@ import java.util.List;
  */
 public class Plotter {
 
-    MapWindow window = new MapWindow();
+    public static final Logger logger = LoggerFactory.getLogger(Plotter.class);
+    private MapWindow window = new MapWindow();
 
     /**
      * Print computed path path.
@@ -48,10 +51,12 @@ public class Plotter {
             previous = current;
 
             window.repaint();
+
+            // Add small delay between segment prints for better visualisation experience.
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
         }
