@@ -10,8 +10,6 @@ import com.lemmingapex.trilateration.TrilaterationFunction;
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
 import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,13 +109,16 @@ public class TraceProcessor {
         int recordCounter = 0;
         double time = 0;
 
+        double[] radiusDistances = computeCircleRadius(trackingRecordsAtSameTime);
 
         Iterator<TrackingRecord> it = trackingRecordsAtSameTime.iterator();
         while (it.hasNext()) {
             TrackingRecord tr = it.next();
             positions[recordCounter][0] = tr.getxAxis();
             positions[recordCounter][1] = tr.getyAxis();
-            distances[recordCounter++] = 100 + tr.getRssi();
+            distances[recordCounter] = 100 + tr.getRssi();
+            // distances[recordCounter] = tr.getRssi();
+            // distances[recordCounter] = radiusDistances[recordCounter++];
             time += tr.getTime();
         }
 
@@ -135,5 +136,54 @@ public class TraceProcessor {
         return new TracePoint(time/recordCounter, centroid[0], centroid[1]);
     }
 
+    /**
+     * Compute the radius for circles that intersect at the same time.
+     *
+     * @param trackingRecordsAtSameTime tracing records that are supposed to happen at the same time.
+     * @return radius values for circles that should intersect at the same time.
+     */
+    public double[] computeCircleRadius(List<TrackingRecord> trackingRecordsAtSameTime) {
+        int trn = trackingRecordsAtSameTime.size();
+        int radius = 1;
+        double[] radiusDistance = new double[trn];
+        double[][] centers = new double[trn][2];
+
+        // obtain all centers
+        Iterator<TrackingRecord> it = trackingRecordsAtSameTime.iterator();
+
+        int i = 0;
+        while (it.hasNext()) {
+            TrackingRecord tr = it.next();
+            centers[i][0] = tr.getxAxis();
+            centers[i++][1] = tr.getxAxis();
+        }
+
+        boolean allCircleIntersect = false;
+        while (allCircleIntersect == false) {
+
+            i = 0;
+            it = trackingRecordsAtSameTime.iterator();
+            while (it.hasNext()) {
+                TrackingRecord tr = it.next();
+                radiusDistance[i++] = (100 + tr.getRssi()) * radius / 100.0;
+            }
+
+            allCircleIntersect = true;
+            for (int j = 0; j < trn - 1; j++) {
+                for (int k = j + 1; k < trn; k++) {
+                    float dist = (float) Math.sqrt(Math.pow(centers[j][0] - centers[k][0], 2) + Math.pow(centers[j][1] - centers[k][1], 2));
+
+                    if (dist > radiusDistance[j] + radiusDistance[k]) {
+                        // circles DO NOT intersect
+                        allCircleIntersect = false;
+                    }
+                }
+            }
+            radius++;
+        }
+
+        // we have found the radius for which all circles intersect!
+        return radiusDistance;
+    }
 
 }
