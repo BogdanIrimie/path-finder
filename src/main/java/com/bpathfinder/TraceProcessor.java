@@ -109,15 +109,15 @@ public class TraceProcessor {
         int recordCounter = 0;
         double time = 0;
 
-        double[] radiusDistances = computeCircleRadius(trackingRecordsAtSameTime);
+        //double[] radiusDistances = computeCircleRadius(trackingRecordsAtSameTime);
 
         Iterator<TrackingRecord> it = trackingRecordsAtSameTime.iterator();
         while (it.hasNext()) {
             TrackingRecord tr = it.next();
             positions[recordCounter][0] = tr.getxAxis();
             positions[recordCounter][1] = tr.getyAxis();
-            distances[recordCounter] = 100 + tr.getRssi();
-            // distances[recordCounter] = tr.getRssi();
+            //distances[recordCounter] = 100 + tr.getRssi();
+             distances[recordCounter++] = tr.getRssi();
             // distances[recordCounter] = radiusDistances[recordCounter++];
             time += tr.getTime();
         }
