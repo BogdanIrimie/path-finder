@@ -106,10 +106,6 @@ public class TraceProcessor {
      * @return TracePoint obtain by trilateration.
      */
     private TracePoint computeTracePointByTrilateration(List<TrackingRecord> trackingRecordsAtSameTime) {
-
-//        trackingRecordsAtSameTime = trackingRecordsAtSameTime.stream().distinct()
-//                .collect(Collectors.toList());
-
         double[][] positions = new double[trackingRecordsAtSameTime.size()][2];
         double[] distances = new double[trackingRecordsAtSameTime.size()];
         int recordCounter = 0;
@@ -138,4 +134,6 @@ public class TraceProcessor {
 
         return new TracePoint(time/recordCounter, centroid[0], centroid[1]);
     }
+
+
 }
