@@ -10,6 +10,8 @@ import com.lemmingapex.trilateration.TrilaterationFunction;
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
 import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +47,7 @@ public class TraceProcessor {
                     flatTime.add(trackingRecord);
                 }
                 else {
-                    if (flatTime.stream().distinct().count() >= 3) {
+                    if (flatTime.stream().distinct().count() >= 2) {
                         // TracePoint tp = computeTrackingPointByAverage(flatTime);
                         TracePoint tp = computeTracePointByTrilateration(flatTime);
                         pathTraces.add(tp);
@@ -119,7 +121,7 @@ public class TraceProcessor {
             TrackingRecord tr = it.next();
             positions[recordCounter][0] = tr.getxAxis();
             positions[recordCounter][1] = tr.getyAxis();
-            distances[recordCounter++] = tr.getRssi();
+            distances[recordCounter++] = 100 + tr.getRssi();
             time += tr.getTime();
         }
 
@@ -133,7 +135,6 @@ public class TraceProcessor {
             //ignore exception
             //logger.error(e.getMessage(), e);
         }
-
 
         return new TracePoint(time/recordCounter, centroid[0], centroid[1]);
     }
