@@ -41,6 +41,21 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Used for trilateration -->
+        <dependency>
+            <groupId>com.lemmingapex.trilateration</groupId>
+            <artifactId>trilateration</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ldapjdk</groupId>
+            <artifactId>ldapjdk</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/libs/minigeo.jar</systemPath>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
